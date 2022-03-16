@@ -1,0 +1,39 @@
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    color: blue;
+}
+
+
+.startButton {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 600px;
+    max-width: 80%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid grey;
+    border-radius: 3px;
+    box-shadow: 0 0 2px;
+}
+
+.buttonGrid {
+    display: grid;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
