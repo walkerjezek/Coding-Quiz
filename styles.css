@@ -8,13 +8,18 @@ h1 {
     display: flex;
     justify-content: space-between;
     color: blue;
+    border-bottom: 1px solid grey;
+    margin: 10px;
 }
 
 
 .startButton {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
+
 
 .container {
     width: 600px;
@@ -25,12 +30,23 @@ h1 {
     align-items: center;
     padding: 20px;
     border: 1px solid grey;
-    border-radius: 3px;
-    box-shadow: 0 0 2px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px;
+}
+
+.hidden {
+    display: none;
+}
+
+.questionContainer {
+    display: flex;
+    justify-content: center;
 }
 
 .buttonGrid {
     display: grid;
+    padding: 10px;
+    justify-content: center;
 }
 
 .center {

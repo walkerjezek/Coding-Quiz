@@ -10,37 +10,45 @@
 
   <body>
     <header class="header">
-      <p>View Highscores</p>
-      <p>Timer:</p>
+      <h2>View Highscores</h2>
+      <h2 id="timer">Timer: 100</h2>
     </header>
 
     <main>
-      <section>
+      <!-- Start the quiz. Hide after start button is pressed -->
+      <section class="quizTitleCard">
         <h1>Coding Quiz</h1>
-        <button class="startButton">Start</button>
+        <div class="startButton">
+          <button id="startButton">Start Quiz</button>
+        </div>
       </section>
 
+      <!-- This container is for the quiz questions and answers -->
       <section class="center">
-        <div class="container">
-          <div class="questionContainer" class="hide">
-            <div id="question">Question</div>
+        <div id="questionContainer" class="container hidden">
+          <div>
+            <div id="question"></div>
 
             <div id="answerButtons" class=buttonGrid>
-              <button class="btn">Answer 1</button>
-              <button class="btn">Answer 2</button>
-              <button class="btn">Answer 3</button>
-              <button class="btn">Answer 4</button>
+              <button id="btnA">Answer 1</button>
+              <button id="btnB">Answer 2</button>
+              <button id="btnC">Answer 3</button>
+              <button id="btnD">Answer 4</button>
             </div>
           </div>
+        </div>
+        <div id="quizResults" class="hidden">
+          Test
         </div>
       </section>
 
 
-
       <section>
 
       </section>
+
     </main>
+
     <script src="script.js"></script>
   </body>
 </html>
