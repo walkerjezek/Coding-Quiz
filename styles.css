@@ -34,6 +34,24 @@ h1 {
     box-shadow: 0 0 3px;
 }
 
+.resultsContainer {
+    width: 600px;
+    max-width: 80%;
+    height: 300px;
+    display: grid;
+    justify-content: center;
+    align-self: center;
+    padding: 20px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    box-shadow: 0 0 3px;
+}
+
+.resultsContainer h2 {
+    display: flex;
+    justify-content: center;
+}
+
 .hidden {
     display: none;
 }
@@ -46,6 +64,7 @@ h1 {
 .buttonGrid {
     display: grid;
     padding: 10px;
+    margin: 10px;
     justify-content: center;
 }
 

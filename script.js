@@ -1,3 +1,4 @@
+// Golbal Variables
 var startButton = document.getElementById('startButton');
 var questionContainerEl = document.getElementById('questionContainer');
 var questionNumber = 0;
@@ -7,17 +8,21 @@ var btnC = document.getElementById('btnC');
 var btnD = document.getElementById('btnD');
 var score = 0;
 var quizResultsEl = document.getElementById('quizResults');
+var submitButton = document.getElementById('submitButton');
+var scoreEl = document.getElementById('finalScore');
 
+
+// Quiz button event listeners
 btnA.addEventListener('click', function(){answerClick("A")});
 btnB.addEventListener('click', function(){answerClick("B")});
 btnC.addEventListener('click', function(){answerClick("C")});
 btnD.addEventListener('click', function(){answerClick("D")});
 
-
-
+// Start button listener
 startButton.addEventListener('click', startQuiz);
 
 
+// Start Quiz function 
 function startQuiz() {
     console.log('Started');
     startButton.classList.add('hidden');
@@ -27,13 +32,14 @@ function startQuiz() {
     showQuestion(questionNumber);
 }
 
+// Hides the start button when clicked
 function hideStartButton() {
     var startButtonEl = document.getElementById('startButton');
     startButtonEl.setAttribute("class", "hidden");
 }
 
 
-
+// Function to go through the questions
 function showQuestion(questionNumber) {
     var currentQuestion = myQuestions[questionNumber]
     document.getElementById('question').textContent = currentQuestion.question;
@@ -47,6 +53,7 @@ function showQuestion(questionNumber) {
 
 }
 
+// Function for clicking the answer buttons
 function answerClick(questionLetter) {
     var correctAnswer = myQuestions[questionNumber].correctAnswer
     console.log("correctAnswer", correctAnswer);
@@ -54,10 +61,13 @@ function answerClick(questionLetter) {
 
     if (correctAnswer == questionLetter) {
         score = score + 1;
+        scoreEl.textContent = "Score: " + score;
     } else {
+        // Subtract 10 seconds if wrong answer
         secondsLeft = secondsLeft - 10;
     }
 
+    // Last question
     if (questionNumber === myQuestions.length - 1) {
         questionContainerEl.setAttribute("class", "hidden");
         quizResultsEl.classList.remove("hidden");
@@ -68,12 +78,18 @@ function answerClick(questionLetter) {
 }
 
 
+// Submit your score
+var finalStats = {
+    name: nameInput.value,
+    score: finalScore.value
+};
 
-
+function submitScore() {
+    localStorage.setItem("finalStats", JSON.stringify(finalStats));
+}
 
 
 // Timer Section
-
 var timeEl = document.getElementById('timer');
 var secondsLeft = 100;
 // Timer function
@@ -93,6 +109,7 @@ function setTime() {
     }, 1000);
   }
 
+//   Hide and unhide functionality
 function sendMessage() {
     questionContainerEl.setAttribute("class", "hidden");
     quizResultsEl.classList.remove("hidden");
