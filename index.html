@@ -10,7 +10,7 @@
 
   <body>
     <header class="header">
-      <h2>View Highscores</h2>
+      <button id="viewHighscores" class="scoresBtn">View Highscores</button>
       <h2 id="timer">Timer: 100</h2>
     </header>
 
@@ -20,6 +20,9 @@
         <h1>Coding Quiz</h1>
         <div class="startButton">
           <button id="startButton">Start Quiz</button>
+        </div>
+        <div id="outOfTime" class="hidden">
+          <h2>Out of Time!!</h2>
         </div>
       </section>
 
@@ -38,6 +41,7 @@
           </div>
         </div>
 
+        
         <!-- This container is for the test results -->
         <div id="quizResults" class="hidden resultsContainer">
           <div>
@@ -45,9 +49,16 @@
           </div>
           <div class="resultsInput">
             <label for="name">Name: </label>
-            <input type="text" id="name" name="name">
+              <input id="playerName" name="name">
             <button id="submitButton">Submit Score</button>
           </div>
+        </div>
+
+        <!-- Container for the final scores -->
+        <div id="highscores" class="highscoreContainer hidden">
+          <h3 class="finalScoreList"></h3>
+          <button class="playAgainBtn" onClick="window.location.reload();">Play Again?</button>
+          <button id="clearScoresBtn" class="clearScores">Clear Highscores</button>
         </div>
       </section>
 

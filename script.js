@@ -10,35 +10,56 @@ var score = 0;
 var quizResultsEl = document.getElementById('quizResults');
 var submitButton = document.getElementById('submitButton');
 var scoreEl = document.getElementById('finalScore');
+var playerName = document.getElementById('playerName');
+var highscoreContainer = document.getElementById('highscores');
+var viewHighscores = document.getElementById('viewHighscores');
 
+//-------------------------------------------------------------------
+// Figure out "Out of Time" message
+var timeOutEl = document.getElementById('outOfTime');
 
+//-------------------------------------------------------------------
 // Quiz button event listeners
 btnA.addEventListener('click', function(){answerClick("A")});
 btnB.addEventListener('click', function(){answerClick("B")});
 btnC.addEventListener('click', function(){answerClick("C")});
 btnD.addEventListener('click', function(){answerClick("D")});
 
+//-------------------------------------------------------------------
 // Start button listener
 startButton.addEventListener('click', startQuiz);
 
+// Highscores listener
+viewHighscores.addEventListener('click', highscores);
+function highscores() {
+    console.log('Scores');
+    highscoreContainer.classList.remove("hidden");
+    questionContainerEl.setAttribute("class", "hidden");
+    quizResultsEl.setAttribute("class", "hidden");
+    timeEl = 0;
+    hideStartButton();
+}
 
+//-------------------------------------------------------------------
 // Start Quiz function 
 function startQuiz() {
     console.log('Started');
     startButton.classList.add('hidden');
+    highscoreContainer.setAttribute("class", "hidden");
     questionContainerEl.classList.remove('hidden');
     setTime();
     hideStartButton();
     showQuestion(questionNumber);
 }
 
+//-------------------------------------------------------------------
 // Hides the start button when clicked
 function hideStartButton() {
     var startButtonEl = document.getElementById('startButton');
     startButtonEl.setAttribute("class", "hidden");
 }
 
-
+//-------------------------------------------------------------------
 // Function to go through the questions
 function showQuestion(questionNumber) {
     var currentQuestion = myQuestions[questionNumber]
@@ -50,9 +71,9 @@ function showQuestion(questionNumber) {
     btnD.textContent = currentQuestion.answer.D;
     
     document.getElementById('questionContainer').classList.remove('hidden');
-
 }
 
+//-------------------------------------------------------------------
 // Function for clicking the answer buttons
 function answerClick(questionLetter) {
     var correctAnswer = myQuestions[questionNumber].correctAnswer
@@ -71,6 +92,8 @@ function answerClick(questionLetter) {
     if (questionNumber === myQuestions.length - 1) {
         questionContainerEl.setAttribute("class", "hidden");
         quizResultsEl.classList.remove("hidden");
+        timeEl.textContent = "Timer: 0";
+        secondsLeft = 0;
     } else {
         questionNumber = questionNumber + 1;
         showQuestion(questionNumber);
@@ -78,17 +101,7 @@ function answerClick(questionLetter) {
 }
 
 
-// Submit your score
-var finalStats = {
-    name: nameInput.value,
-    score: finalScore.value
-};
-
-function submitScore() {
-    localStorage.setItem("finalStats", JSON.stringify(finalStats));
-}
-
-
+//-------------------------------------------------------------------
 // Timer Section
 var timeEl = document.getElementById('timer');
 var secondsLeft = 100;
@@ -99,16 +112,16 @@ function setTime() {
       secondsLeft--;
       timeEl.textContent = "Timer: " + secondsLeft;
   
-      if(secondsLeft === 0) {
+      if(secondsLeft === 0 || secondsLeft < 0) {
         // Stops execution of action at set interval
         clearInterval(timerInterval);
         // Calls function to create and send the out of time message
         sendMessage();
+        document.getElementById('outOfTime').classList.remove("hidden");
+        timeEl.textContent = "Timer: 0";
       }
-  
     }, 1000);
   }
-
 //   Hide and unhide functionality
 function sendMessage() {
     questionContainerEl.setAttribute("class", "hidden");
@@ -116,9 +129,32 @@ function sendMessage() {
 }
 
 
+//-------------------------------------------------------------------
+// Submit your score. Ref: 04-01-23
+// Global scope for storage?
+//Submit button listener
+// Ref: 04-01-25 for adding stored items to a list
+submitButton.addEventListener('click', submitScore);
+
+function submitScore () {
+    var finalStats = {
+        playerName: playerName.value.trim(),
+        scoreEl: score
+    };
+    localStorage.setItem("finalStats", JSON.stringify(finalStats));
+
+    console.log("Submitted");
+    quizResultsEl.setAttribute("class", "hidden");
+    document.getElementById("highscores").classList.remove("hidden");
+    document.getElementById('outOfTime').classList.add("hidden");
+    var playerScore = JSON.parse(localStorage.getItem('finalStats'));
+    if (playerScore !== null) {
+        document.querySelector(".finalScoreList").textContent = playerScore.playerName + " - " + playerScore.scoreEl
+    }
+};
 
 
-
+//-------------------------------------------------------------------
 //   Quiz Questions 
 var myQuestions = [
     {
