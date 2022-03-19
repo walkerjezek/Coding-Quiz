@@ -13,6 +13,7 @@ var scoreEl = document.getElementById('finalScore');
 var playerName = document.getElementById('playerName');
 var highscoreContainer = document.getElementById('highscores');
 var viewHighscores = document.getElementById('viewHighscores');
+var clearScores = document.getElementById('clearScoresBtn');
 
 //-------------------------------------------------------------------
 // Figure out "Out of Time" message
@@ -31,6 +32,7 @@ startButton.addEventListener('click', startQuiz);
 
 // Highscores listener
 viewHighscores.addEventListener('click', highscores);
+
 function highscores() {
     console.log('Scores');
     highscoreContainer.classList.remove("hidden");
@@ -137,11 +139,14 @@ function sendMessage() {
 submitButton.addEventListener('click', submitScore);
 
 function submitScore () {
+    var scoresArray = JSON.parse(localStorage.getItem("finalStats")) || [];
     var finalStats = {
         playerName: playerName.value.trim(),
         scoreEl: score
     };
-    localStorage.setItem("finalStats", JSON.stringify(finalStats));
+    // does push overwrite?
+    scoresArray.push(finalStats);
+    localStorage.setItem("finalStats", JSON.stringify(scoresArray));
 
     console.log("Submitted");
     quizResultsEl.setAttribute("class", "hidden");
@@ -149,9 +154,26 @@ function submitScore () {
     document.getElementById('outOfTime').classList.add("hidden");
     var playerScore = JSON.parse(localStorage.getItem('finalStats'));
     if (playerScore !== null) {
-        document.querySelector(".finalScoreList").textContent = playerScore.playerName + " - " + playerScore.scoreEl
+        
+
+        for (var i = 0; i < playerScore.length; i++) {
+            document.querySelector(".finalScoreList").textContent = playerScore[i].playerName + " - " + playerScore[i].scoreEl
+        }
+
     }
 };
+
+//-------------------------------------------------------------------
+// Clear Local Storage
+clearScores.addEventListener('click', clearLocalStorage);
+
+function clearLocalStorage() {
+    localStorage.clear();
+    document.querySelector(".finalScoreList").classList.add("hidden");
+}
+
+
+
 
 
 //-------------------------------------------------------------------
