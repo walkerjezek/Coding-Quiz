@@ -14,6 +14,8 @@ var playerName = document.getElementById('playerName');
 var highscoreContainer = document.getElementById('highscores');
 var viewHighscores = document.getElementById('viewHighscores');
 var clearScores = document.getElementById('clearScoresBtn');
+var wrong = document.getElementById('wrong');
+var correct = document.getElementById('correct');
 
 //-------------------------------------------------------------------
 // Figure out "Out of Time" message
@@ -85,9 +87,13 @@ function answerClick(questionLetter) {
     if (correctAnswer == questionLetter) {
         score = score + 1;
         scoreEl.textContent = "Score: " + score;
+        correct.classList.remove("hidden");
+        wrong.setAttribute("class", "hidden");
     } else {
         // Subtract 10 seconds if wrong answer
         secondsLeft = secondsLeft - 10;
+        wrong.classList.remove("hidden");
+        correct.setAttribute("class", "hidden");
     }
 
     // Last question
@@ -140,11 +146,12 @@ submitButton.addEventListener('click', submitScore);
 
 function submitScore () {
     var scoresArray = JSON.parse(localStorage.getItem("finalStats")) || [];
+    if(scoresArray == null) finalStats = [];
     var finalStats = {
         playerName: playerName.value.trim(),
         scoreEl: score
     };
-    // does push overwrite?
+
     scoresArray.push(finalStats);
     localStorage.setItem("finalStats", JSON.stringify(scoresArray));
 
@@ -163,6 +170,7 @@ function submitScore () {
     }
 };
 
+
 //-------------------------------------------------------------------
 // Clear Local Storage
 clearScores.addEventListener('click', clearLocalStorage);
@@ -171,9 +179,6 @@ function clearLocalStorage() {
     localStorage.clear();
     document.querySelector(".finalScoreList").classList.add("hidden");
 }
-
-
-
 
 
 //-------------------------------------------------------------------
